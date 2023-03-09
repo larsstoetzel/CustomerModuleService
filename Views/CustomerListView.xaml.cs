@@ -21,7 +21,6 @@ namespace CustomerModuleService.Views
     {
         public CustomerListView()
         {
-            InitializeComponent();
         }
     }
 }

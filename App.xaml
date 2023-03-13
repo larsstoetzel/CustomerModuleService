@@ -4,6 +4,37 @@
              xmlns:local="clr-namespace:CustomerModuleService"
              StartupUri="./Views/CustomerListView.xaml">
     <Application.Resources>
-         
+        <!--Style für Standardbutton-->
+        <Style TargetType="Button" x:Key="btnStandard">
+            <Setter Property="Background" Value="LightGray"/>
+            <Setter Property="Foreground" Value="#000"/>
+            <Setter Property="FontSize" Value="17"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                            CornerRadius="5"
+                            BorderThickness="0.4"
+                            BorderBrush="#000">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsFocused"  Value="True" >
+                    <Setter Property="Background" Value="Blue"/>
+                    <Setter Property="Foreground" Value="#fff"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver"  Value="True" >
+                    <Setter Property="Background" Value="Blue"/>
+                    <Setter Property="Foreground" Value="#fff"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
     </Application.Resources>
 </Application>

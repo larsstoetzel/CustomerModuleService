@@ -15,16 +15,18 @@
           VerticalAlignment="Center" 
           Width="1480">
         <Border BorderBrush="Black" BorderThickness="3" Margin="0,0,0,10"/>
-        <Button x:Name="btn_AddCustomer" 
-                Content="Neu"
+        <Button Content="Neu"
+                x:Name="btn_AddCustomer" 
                 HorizontalAlignment="Left" 
                 Margin="361,12,0,0" 
-                VerticalAlignment="Top"/>
-        <Button x:Name="btn_EditCustomer" 
-                Content="Bearbeiten"
+                VerticalAlignment="Top" 
+                Style="{StaticResource btnStandard}"/>
+        <Button Content="Bearbeiten"
+                x:Name="btn_EditCustomer" 
                 HorizontalAlignment="Left" 
                 Margin="518,12,0,0" 
-                VerticalAlignment="Top"/>
+                VerticalAlignment="Top"
+                Style="{StaticResource btnStandard}"/>
 
         <TextBox x:Name="tbx_SearchCustomer" 
                  HorizontalAlignment="Left"
@@ -41,23 +43,27 @@
                 Height="35" Width="43">
             <Button.Resources>
                 <Style TargetType="Border">
-                    <Setter Property="CornerRadius" 
-                            Value="8">
-                    </Setter>
+                    <Setter Property="CornerRadius" Value="8"></Setter>
                 </Style>
             </Button.Resources>
         </Button>
         <Image x:Name="img_Logo" 
                RenderTransformOrigin="-3.44,-1.14" 
-               Margin="28,-3,1222,763"/>
-        <ListView x:Name="lv_CustomerList" FontSize="15"
+               Margin="29,-3,1221,763"
+               Source="/Assets/diaLogo.png"/>
+        <ListView x:Name="lv_CustomerList" FontSize="15" 
                   Margin="0,111,0,36" 
                   HorizontalAlignment="Center" Foreground="Black" Width="1423"
-                  HorizontalContentAlignment="Left" SelectionChanged="lv_CustomerList_SelectionChanged">
+                  HorizontalContentAlignment="Left">
 
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Kunde" Width="230" />
+                    <GridView.ColumnHeaderContainerStyle>
+                        <Style TargetType="{x:Type GridViewColumnHeader}">
+                            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                        </Style>
+                    </GridView.ColumnHeaderContainerStyle>
+                    <GridViewColumn Header="Kunde" Width="230"/>
                     <GridViewColumn Header="Ortschaft" Width="200"/>
                     <GridViewColumn Header="URL" Width="490"/>
                     <GridViewColumn Header="PortalURL" Width="490"/>

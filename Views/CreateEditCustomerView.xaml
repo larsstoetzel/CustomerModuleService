@@ -1,12 +1,104 @@
-﻿<Window x:Class="CustomerModuleService.Views.CreateEditCustomerView"
+﻿<Window x:Class="CustomerModules.Views.CreateEditCustomerView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:CustomerModuleService.Views"
+        xmlns:local="clr-namespace:CustomerModules.Views" 
         mc:Ignorable="d"
-        Title="CreateEditCustomerView" Height="450" Width="800">
-    <Grid>
-        
+        Title="CreateEditCustomerView" 
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Height="374" Width="650">
+    <Grid Margin="0,0,0,3">
+        <Border BorderBrush="Black"
+                BorderThickness="1" 
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center"
+                Height="335" Width="630">
+
+        </Border>
+        <Label Content="Kunde" HorizontalAlignment="Left" Height="27" Margin="28,93,0,0" VerticalAlignment="Top" Width="49"/>
+        <Label Content="Ortschaft" HorizontalAlignment="Left" Height="27" Margin="30,147,0,0" VerticalAlignment="Top" Width="68"/>
+        <Label Content="KundenURL" HorizontalAlignment="Left" Height="27" Margin="30,199,0,0" VerticalAlignment="Top" Width="76"/>
+        <Label Content="PortalURL" HorizontalAlignment="Left" Height="27" Margin="31,254,0,0" VerticalAlignment="Top" Width="63"/>
+
+
+        <Button x:Name="btn_AddModule"
+                Content="+Modul"
+                HorizontalAlignment="Left" 
+                Margin="34,26,0,0" 
+                VerticalAlignment="Top" 
+                Style="{StaticResource btnStandard}"/>
+        <Button x:Name="btn_SaveChanges" Content="Speichern" 
+                IsDefault="True"
+                HorizontalAlignment="Left" 
+                Margin="139,26,0,0" 
+                VerticalAlignment="Top" 
+                Style="{StaticResource btnStandard}" RenderTransformOrigin="0.25,0.601"/>
+        <Button x:Name="btn_Delete" Content="Löschen" 
+                HorizontalAlignment="Left" 
+                Margin="244,26,0,0" 
+                VerticalAlignment="Top" 
+                Style="{StaticResource btnStandard}"/>
+        <Button x:Name="btn_Cancel" Content="Abbrechen" 
+                IsCancel="True"
+                HorizontalAlignment="Left" 
+                Margin="349,26,0,0" 
+                VerticalAlignment="Top" 
+                Width="90"
+                Style="{StaticResource btnStandard}"/>
+        <ListView x:Name="lbx_ModuleList" 
+                          HorizontalAlignment="Left" Height="229" 
+                          Margin="349,84,0,0" VerticalAlignment="Top" 
+                          Width="258"
+                          FontSize="15"
+                          SelectionChanged="lbx_ModuleList_SelectionChanged">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Modul" Width="50"/>
+                    <GridViewColumn Header="Aktiv seit" Width="100"/>
+                    <GridViewColumn Header="Entfernen" Width="90">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox  x:Name="chbx_DeleteModule" 
+                                                   Margin="30,0,0,0" 
+                                                   BorderBrush="Red" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <TextBox x:Name="tbx_Customer"
+                 FontSize="17"
+                 HorizontalAlignment="Left"
+                 Margin="34,115,0,0" TextWrapping="Wrap" 
+                 VerticalAlignment="Top" 
+                 Height="26"  Width="295"
+                 VerticalContentAlignment="Center"/>
+        <ComboBox x:Name="cbx_City"
+                  IsEditable="False"
+                  StaysOpenOnEdit="True"
+                  FontSize="17"
+                  HorizontalAlignment="Left" 
+                  Margin="34,168,0,0" 
+                  VerticalAlignment="Top" 
+                  Height="26" Width="295"
+                  VerticalContentAlignment="Center"/>
+        <TextBox x:Name="tbx_Url" 
+                 FontSize="17"
+                 HorizontalAlignment="Left"
+                 Margin="34,218,0,0" TextWrapping="Wrap" 
+                 VerticalAlignment="Top" 
+                 Height="26"  Width="297" TextChanged="tbx_Url_TextChanged"
+                 VerticalContentAlignment="Center"/>
+        <TextBox x:Name="tbx_PortalUrl"
+                 FontSize="17"
+                 HorizontalAlignment="Left"
+                 Margin="34,273,0,0" TextWrapping="Wrap" 
+                 VerticalAlignment="Top" 
+                 Height="26"  Width="296"
+                 VerticalContentAlignment="Center"/>
     </Grid>
 </Window>

@@ -1,12 +1,50 @@
-﻿using System;
+﻿using CustomerModules.Models.Entities;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reflection.Emit;
 
-namespace CustomerModuleService.Models
+namespace CustomerModules.Models
 {
-    internal class CustomerContext
+    public class CustomerContext : DbContext
     {
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Module> Modules { get; set; }
+        public DbSet<City> Cities { get; set; }
+        public DbSet<CustomerModule> CustomerModules { get; set; }
+
+        public string DbPath { get; }
+
+        public CustomerContext()
+        {
+            var folder = Environment.CurrentDirectory;
+            DbPath = System.IO.Path.Join(folder, "dbCustomerModule.db");
+        }
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
+        => options.UseSqlite($"Data Source={DbPath}");
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Customer>()
+                .HasMany(cu => cu.Modules)
+                .WithMany(cu => cu.Customers)
+                .UsingEntity<CustomerModule>("CustomerModule",
+                j => j
+                        .HasOne(cm => cm.Module)
+                        .WithMany(m => m.CustomerModules)
+                        .HasForeignKey(cm => cm.ModuleId),
+                    j => j
+                        .HasOne(cm => cm.Customer)
+                        .WithMany(cu => cu.CustomerModules)
+                        .HasForeignKey(cm => cm.CustomerId),
+                    j =>
+                    {
+                        j.Property(cm => cm.ActivationDate).HasColumnType("DATETIME");
+                        j.HasKey(m => new { m.ModuleId, m.CustomerId });
+                    });
+        }
     }
+
+
+
 }

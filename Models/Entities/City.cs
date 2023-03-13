@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace CustomerModuleService.Models.Entities
+namespace CustomerModules.Models.Entities
 {
-    internal class City
+    public class City
     {
+        public int CityId { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public List<Customer> Customers { get; set; } = new List<Customer>();
     }
 }

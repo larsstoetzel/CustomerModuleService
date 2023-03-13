@@ -1,12 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace CustomerModuleService.Models.Entities
+namespace CustomerModules.Models.Entities
 {
-    internal class CustomerModuel
+    public class CustomerModule
     {
+        public DateTime ActivationDate { get; set; }
+        public int CustomerId { get; set; }
+        public Customer Customer { get; set; } = new Customer();
+        public int ModuleId { get; set; }
+        public Module Module { get; set; } = new Module();
     }
 }

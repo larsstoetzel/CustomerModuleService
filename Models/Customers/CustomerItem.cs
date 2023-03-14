@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CustomerModuleService.Models.Customers
+﻿namespace CustomerModules.Models.Customers
 {
-    internal class CustomerItem
+    public record CustomerItem(int Id, string Name, string City, string Url, string PortalUrl)
     {
+
     }
+
+
 }

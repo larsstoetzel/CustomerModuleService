@@ -4,25 +4,25 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CustomerModules.Views" 
+        xmlns:vm="clr-namespace:CustomerModules.ViewModels" 
+        d:DataContext="{d:DesignInstance Type=vm:CustomerListViewModel}"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         Title="CustomerListView" Height="900" Width="1500">
-
+  
     <Grid KeyboardNavigation.TabNavigation="Cycle"
           HorizontalAlignment="Center" 
           Height="864" 
           VerticalAlignment="Center" 
           Width="1480">
         <Border BorderBrush="Black" BorderThickness="3" Margin="0,0,0,10"/>
-        <Button Content="Neu"
-                x:Name="btn_AddCustomer" 
+        <Button x:Name="btn_AddCustomer" 
                 HorizontalAlignment="Left" 
                 Margin="361,12,0,0" 
                 VerticalAlignment="Top" 
                 Style="{StaticResource btnStandard}"/>
-        <Button Content="Bearbeiten"
-                x:Name="btn_EditCustomer" 
+        <Button x:Name="btn_EditCustomer" Content="Bearbeiten"
                 HorizontalAlignment="Left" 
                 Margin="518,12,0,0" 
                 VerticalAlignment="Top"
@@ -35,8 +35,14 @@
                  VerticalContentAlignment="Center"
                  TextWrapping="Wrap" 
                  VerticalAlignment="Top" 
-                 FontSize="17"/>
+                 FontSize="17"
+                 Style="{StaticResource tbxStandard}"
+                 Text="{Binding SearchString}"/>
+
         <Button Content="Suche" 
+                FontSize="14"
+                Style="{StaticResource btnStandard}"
+                Command="{Binding Search}"
                 HorizontalAlignment="Left"
                 Margin="768,55,0,0" 
                 VerticalAlignment="Top" 
@@ -49,25 +55,47 @@
         </Button>
         <Image x:Name="img_Logo" 
                RenderTransformOrigin="-3.44,-1.14" 
-               Margin="29,-3,1221,763"
+               Margin="28,-3,1222,763"
                Source="/Assets/diaLogo.png"/>
-        <ListView x:Name="lv_CustomerList" FontSize="15" 
+        <ListView x:Name="lv_CustomerList" FontSize="15" ItemsSource="{Binding Customers}"
                   Margin="0,111,0,36" 
                   HorizontalAlignment="Center" Foreground="Black" Width="1423"
-                  HorizontalContentAlignment="Left">
-
+                  HorizontalContentAlignment="Left" SelectionChanged="lv_CustomerList_SelectionChanged">
+            
             <ListView.View>
-                <GridView>
+               <GridView>
                     <GridView.ColumnHeaderContainerStyle>
-                        <Style TargetType="{x:Type GridViewColumnHeader}">
-                            <Setter Property="HorizontalContentAlignment" Value="Left"/>
-                        </Style>
-                    </GridView.ColumnHeaderContainerStyle>
-                    <GridViewColumn Header="Kunde" Width="230"/>
-                    <GridViewColumn Header="Ortschaft" Width="200"/>
-                    <GridViewColumn Header="URL" Width="490"/>
-                    <GridViewColumn Header="PortalURL" Width="490"/>
-                </GridView>
+                    <Style TargetType="{x:Type GridViewColumnHeader}">
+                        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                    </Style>
+               </GridView.ColumnHeaderContainerStyle>
+                    <GridViewColumn Header="Kunde" Width="230" DisplayMemberBinding="{Binding Name}"/>
+                    <GridViewColumn Header="Ortschaft" Width="200"  DisplayMemberBinding="{Binding City}"/>
+                    <GridViewColumn Header="URL" Width="490">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock>
+                            <Hyperlink NavigateUri="{Binding Url}"
+                                       RequestNavigate="Hyperlink_RequestNavigate">
+                                <TextBlock Text="{Binding Url}" />
+                            </Hyperlink>
+                        </TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="PortalURL" Width="490">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock>
+                            <Hyperlink NavigateUri="{Binding PortalUrl}"
+                                       RequestNavigate="Hyperlink_RequestNavigate">
+                                <TextBlock Text="{Binding PortalUrl}" />
+                            </Hyperlink>
+                        </TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+               </GridView>
             </ListView.View>
         </ListView>
     </Grid>

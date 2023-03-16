@@ -14,7 +14,15 @@ namespace CustomerModules.Providers
         {
             _context = context;
         }
-        
+       public Customer GetCustomerById(int id)
+        {
+            return _context.Customers
+                .AsNoTracking()
+                .Include(x => x.CustomerModules)
+                .ThenInclude(x => x.Module)
+                .Include(x => x.City)
+                .Single(x => x.CustomerId == id);
+        }
         public List<Customer> GetCustomerByNameOrAll(string searchString)
         {
             if (searchString != null)

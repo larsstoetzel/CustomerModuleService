@@ -4,7 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CustomerModules.Views" 
+        xmlns:vm="clr-namespace:CustomerModules.ViewModels"
         mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=vm:CreateEditCustomerViewModel}"
         Title="CreateEditCustomerView" 
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
@@ -24,24 +26,28 @@
 
 
         <Button x:Name="btn_AddModule"
+                Command="{Binding OpenAddModule}"
                 Content="+Modul"
                 HorizontalAlignment="Left" 
                 Margin="34,26,0,0" 
                 VerticalAlignment="Top" 
                 Style="{StaticResource btnStandard}"/>
         <Button x:Name="btn_SaveChanges" Content="Speichern" 
+                Command="{Binding SaveCommand}"
                 IsDefault="True"
                 HorizontalAlignment="Left" 
                 Margin="139,26,0,0" 
                 VerticalAlignment="Top" 
                 Style="{StaticResource btnStandard}" RenderTransformOrigin="0.25,0.601"/>
         <Button x:Name="btn_Delete" Content="Löschen" 
+                Command="{Binding OpenDelete}"
                 HorizontalAlignment="Left" 
                 Margin="244,26,0,0" 
                 VerticalAlignment="Top" 
                 Style="{StaticResource btnStandard}"/>
         <Button x:Name="btn_Cancel" Content="Abbrechen" 
                 IsCancel="True"
+                Command="{Binding CloseCreateEdit}"
                 HorizontalAlignment="Left" 
                 Margin="349,26,0,0" 
                 VerticalAlignment="Top" 
@@ -52,15 +58,17 @@
                           Margin="349,84,0,0" VerticalAlignment="Top" 
                           Width="258"
                           FontSize="15"
+                          ItemsSource="{Binding Modules}"
                           SelectionChanged="lbx_ModuleList_SelectionChanged">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Modul" Width="50"/>
-                    <GridViewColumn Header="Aktiv seit" Width="100"/>
+                    <GridViewColumn Header="Modul" Width="70" DisplayMemberBinding="{Binding Module.Name}"/>
+                    <GridViewColumn Header="Aktiv seit" Width="85" DisplayMemberBinding="{Binding ActivationDate}"/>
                     <GridViewColumn Header="Entfernen" Width="90">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <CheckBox  x:Name="chbx_DeleteModule" 
+                                                   IsChecked="{Binding delete}"
                                                    Margin="30,0,0,0" 
                                                    BorderBrush="Red" />
                             </DataTemplate>
@@ -71,6 +79,8 @@
         </ListView>
 
         <TextBox x:Name="tbx_Customer"
+                 Style="{StaticResource tbxStandard}"
+                 Text="{Binding Path=Name}"
                  FontSize="17"
                  HorizontalAlignment="Left"
                  Margin="34,115,0,0" TextWrapping="Wrap" 
@@ -78,6 +88,10 @@
                  Height="26"  Width="295"
                  VerticalContentAlignment="Center"/>
         <ComboBox x:Name="cbx_City"
+                  ItemsSource="{Binding Cities}" 
+                  SelectedItem="{Binding SelectedCity, Mode=TwoWay}" 
+                  Text="{Binding Path=City}"
+                  DisplayMemberPath="Name"
                   IsEditable="False"
                   StaysOpenOnEdit="True"
                   FontSize="17"
@@ -85,8 +99,21 @@
                   Margin="34,168,0,0" 
                   VerticalAlignment="Top" 
                   Height="26" Width="295"
-                  VerticalContentAlignment="Center"/>
+                  VerticalContentAlignment="Center">
+            <ComboBox.Resources>
+                <Style TargetType="ComboBox">
+                    <Style.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="BorderBrush" Value="Blue"/>
+                            <Setter Property="BorderThickness" Value="5"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ComboBox.Resources>
+        </ComboBox>
         <TextBox x:Name="tbx_Url" 
+                 Text="{Binding Path=Url}"
+                 Style="{StaticResource tbxStandard}"
                  FontSize="17"
                  HorizontalAlignment="Left"
                  Margin="34,218,0,0" TextWrapping="Wrap" 
@@ -94,11 +121,16 @@
                  Height="26"  Width="297" TextChanged="tbx_Url_TextChanged"
                  VerticalContentAlignment="Center"/>
         <TextBox x:Name="tbx_PortalUrl"
+                 Text="{Binding Path=PortalUrl}"
+                 Style="{StaticResource tbxStandard}"
                  FontSize="17"
                  HorizontalAlignment="Left"
                  Margin="34,273,0,0" TextWrapping="Wrap" 
                  VerticalAlignment="Top" 
                  Height="26"  Width="296"
                  VerticalContentAlignment="Center"/>
+
+
+
     </Grid>
 </Window>

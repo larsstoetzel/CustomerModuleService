@@ -10,7 +10,7 @@
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         Title="CustomerListView" Height="900" Width="1500">
-  
+
     <Grid KeyboardNavigation.TabNavigation="Cycle"
           HorizontalAlignment="Center" 
           Height="864" 
@@ -18,11 +18,13 @@
           Width="1480">
         <Border BorderBrush="Black" BorderThickness="3" Margin="0,0,0,10"/>
         <Button x:Name="btn_AddCustomer" 
+                Command="{Binding OpenCreate}" Content="Neu"
                 HorizontalAlignment="Left" 
                 Margin="361,12,0,0" 
                 VerticalAlignment="Top" 
                 Style="{StaticResource btnStandard}"/>
         <Button x:Name="btn_EditCustomer" Content="Bearbeiten"
+                Command="{Binding OpenEdit }"
                 HorizontalAlignment="Left" 
                 Margin="518,12,0,0" 
                 VerticalAlignment="Top"
@@ -58,17 +60,18 @@
                Margin="28,-3,1222,763"
                Source="/Assets/diaLogo.png"/>
         <ListView x:Name="lv_CustomerList" FontSize="15" ItemsSource="{Binding Customers}"
+                  SelectedItem="{Binding SelectedCustomer}"
                   Margin="0,111,0,36" 
                   HorizontalAlignment="Center" Foreground="Black" Width="1423"
                   HorizontalContentAlignment="Left" SelectionChanged="lv_CustomerList_SelectionChanged">
-            
+
             <ListView.View>
-               <GridView>
+                <GridView>
                     <GridView.ColumnHeaderContainerStyle>
-                    <Style TargetType="{x:Type GridViewColumnHeader}">
-                        <Setter Property="HorizontalContentAlignment" Value="Left"/>
-                    </Style>
-               </GridView.ColumnHeaderContainerStyle>
+                        <Style TargetType="{x:Type GridViewColumnHeader}">
+                            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                        </Style>
+                    </GridView.ColumnHeaderContainerStyle>
                     <GridViewColumn Header="Kunde" Width="230" DisplayMemberBinding="{Binding Name}"/>
                     <GridViewColumn Header="Ortschaft" Width="200"  DisplayMemberBinding="{Binding City}"/>
                     <GridViewColumn Header="URL" Width="490">
@@ -95,7 +98,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-               </GridView>
+                </GridView>
             </ListView.View>
         </ListView>
     </Grid>

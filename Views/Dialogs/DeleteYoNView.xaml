@@ -5,6 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CustomerModules.Views.Dialogs"
         mc:Ignorable="d"
+        xmlns:vm="clr-namespace:CustomerModules.ViewModels" 
+        d:DataContext="{d:DesignInstance Type=vm:DeleteYoNViewModel}"
         Title="DeleteYoNView" Height="150" Width="300"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
@@ -12,12 +14,21 @@
 
         <Border BorderBrush="Black" BorderThickness="1" Margin="10,10,10,10"/>
         <Button x:Name="btn_no"
+                Command="{Binding CloseDeleteViewCommand}"
+                IsCancel="True"
                 Style="{StaticResource ResourceKey=btnStandard}" 
                 Content="Nein" Margin="20,79,180,20"/>
-        <Button x:Name="btn_Yes" 
+        <Button x:Name="btn_Yes"
+                Command="{Binding DeleteCustomerCommand}"
                 Style="{StaticResource ResourceKey=btnStandard}" 
                 Content="Ja" Margin="180,79,20,20"/>
-        <TextBlock HorizontalAlignment="Center"  TextAlignment="Center" TextWrapping="Wrap" Text="...wirklich löschen" Margin="0,28,0,67" Width="260"/>
+        <TextBlock HorizontalAlignment="Center"  TextAlignment="Center" TextWrapping="Wrap" 
+                   Margin="0,28,0,67" Width="260"
+                   >
+            <Run Text="{Binding Path=Customer.Name}"/>
+            <LineBreak/>
+            <Run Text="wirklich löschen?"/>
+        </TextBlock>
 
     </Grid>
 </Window>

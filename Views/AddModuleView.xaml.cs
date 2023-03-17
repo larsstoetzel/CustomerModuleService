@@ -1,4 +1,7 @@
-﻿using System.Windows;
+﻿using CustomerModules.ViewModels;
+using CustomerModuleService;
+using Microsoft.Extensions.DependencyInjection;
+using System.Windows;
 
 namespace CustomerModules.Views
 {
@@ -10,6 +13,8 @@ namespace CustomerModules.Views
         public AddModuleView()
         {
             InitializeComponent();
+            DataContext = App.Current.Services.GetService<AddModuleViewModel>();
+
         }
     }
 }

@@ -1,16 +1,14 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CustomerModules.Commands;
-using CustomerModules.Models;
 using CustomerModules.Models.Entities;
 using CustomerModules.Providers;
 using CustomerModules.Services;
 using CustomerModules.Views;
 using CustomerModules.Views.Dialogs;
 using CustomerModuleService.Providers;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
 
 namespace CustomerModules.ViewModels
@@ -18,16 +16,19 @@ namespace CustomerModules.ViewModels
 
     public class CreateEditCustomerViewModel : ObservableObject
     {
-        public CustomerContext _customerContext { get; set; }
+
         public ICommand OpenAddModule { get; }
         public ICommand OpenDelete { get; }
         public ICommand CloseCreateEdit { get; }
         public ICommand SaveCommand { get; }
         private readonly ICustomerService customerService;
         private readonly ICustomerCommands _commands;
+        private readonly IModuleProvider _moduleProvider;
         public CreateEditCustomerViewModel(ICustomerCommands commands, ICustomerService customerService,
-            ICityProvider cityProvider, ICustomerProvider customerProvider, CustomerContext customerContext)
+            ICityProvider cityProvider, ICustomerProvider customerProvider,
+            IModuleProvider moduleProvider)
         {
+            OpenAddModule = new RelayCommand(ExeOpenAddModule);
             OpenDelete = new RelayCommand(ExeOpenDelete, CanExeDelete);
             SaveCommand = new RelayCommand(ExeCreate);
             Cities = new ObservableCollection<City>(cityProvider.GetAllCities());
@@ -36,7 +37,7 @@ namespace CustomerModules.ViewModels
             _cityProvider = cityProvider;
             _customerProvider = customerProvider;
             _commands = commands;
-            _customerContext = customerContext;
+            _moduleProvider = moduleProvider;
         }
         private ICustomerService _customerService;
         private ICityProvider _cityProvider;
@@ -96,7 +97,10 @@ namespace CustomerModules.ViewModels
             get { return modules; }
             set { SetProperty(ref modules, value); }
         }
+
         
+
+       
 
         public void LoadCustomer(int id)
         {
@@ -117,12 +121,26 @@ namespace CustomerModules.ViewModels
 
 
         public void ExeCreate()
-        {
-            List<(int moduleId, DateTime activationDate, bool delete)> modules = new List<(int moduleId, DateTime activationDate, bool delete)>();
-            
-
-            _customerService.AddEditCustomer(Name, CustomerId, SelectedCity.CityId, Url, PortalUrl);
+        {       
+            _customerService
+                .AddEditCustomer(Name, CustomerId, SelectedCity.CityId, Url, PortalUrl, Modules.ToList());
             _commands.ExeCloseCreateEdit();
+        }
+       
+        private void ExeOpenAddModule()
+        {
+            var addModuleView = new AddModuleView();
+            addModuleView.ShowDialog();
+            if (addModuleView.DialogResult == true)
+            {
+                var data = addModuleView.DataContext as AddModuleViewModel;
+                var newModule = new CustomerModule
+                {
+                    Module = data.Module,
+                    ActivationDate = data.ActivationDate,
+                };
+                Modules.Add(newModule);
+            }
         }
 
         private void ExeOpenDelete()
@@ -133,5 +151,6 @@ namespace CustomerModules.ViewModels
 
         }
     }
+
 }
 

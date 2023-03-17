@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CustomerModules.Models.Entities
 {
@@ -9,5 +10,7 @@ namespace CustomerModules.Models.Entities
         public Customer Customer { get; set; } = new Customer();
         public int ModuleId { get; set; }
         public Module Module { get; set; } = new Module();
+        [NotMapped]
+        public bool Delete { get; set; }= false;
     }
 }

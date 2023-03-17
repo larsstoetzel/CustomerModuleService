@@ -4,7 +4,6 @@ using CustomerModules.Providers;
 using CustomerModules.Services;
 using CustomerModules.ViewModels;
 using CustomerModuleService.Providers;
-using CustomerModuleService.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Windows;
@@ -35,6 +34,7 @@ namespace CustomerModuleService
             services.AddTransient<DeleteYoNViewModel>();
             services.AddSingleton<ICustomerService, CustomerService>();
             services.AddSingleton<ICityProvider, CityProvider>();
+            services.AddSingleton<IModuleProvider, ModuleProvider>();
             services.AddSingleton<ICustomerProvider, CustomerProvider>();
             services.AddSingleton<ICustomerCommands, CustomerCommands>();
             return services.BuildServiceProvider();

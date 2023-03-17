@@ -12,11 +12,13 @@
         ResizeMode="NoResize"
         Height="374" Width="650">
     <Grid Margin="0,0,0,3">
+
         <Border BorderBrush="Black"
                 BorderThickness="1" 
                 HorizontalAlignment="Center" 
                 VerticalAlignment="Center"
                 Height="335" Width="630">
+
 
         </Border>
         <Label Content="Kunde" HorizontalAlignment="Left" Height="27" Margin="28,93,0,0" VerticalAlignment="Top" Width="49"/>
@@ -63,12 +65,15 @@
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Modul" Width="70" DisplayMemberBinding="{Binding Module.Name}"/>
-                    <GridViewColumn Header="Aktiv seit" Width="85" DisplayMemberBinding="{Binding ActivationDate}"/>
+                    <GridViewColumn Header="Aktiv seit" Width="85" 
+                                    DisplayMemberBinding="{Binding ActivationDate, StringFormat= 'dd.MM.yyyy'}">
+
+                    </GridViewColumn>
                     <GridViewColumn Header="Entfernen" Width="90">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <CheckBox  x:Name="chbx_DeleteModule" 
-                                                   IsChecked="{Binding delete}"
+                                                   IsChecked="{Binding Delete}"
                                                    Margin="30,0,0,0" 
                                                    BorderBrush="Red" />
                             </DataTemplate>
@@ -76,17 +81,20 @@
                     </GridViewColumn>
                 </GridView>
             </ListView.View>
+            
         </ListView>
 
         <TextBox x:Name="tbx_Customer"
                  Style="{StaticResource tbxStandard}"
-                 Text="{Binding Path=Name}"
+                 Text="{Binding Name}"
                  FontSize="17"
                  HorizontalAlignment="Left"
                  Margin="34,115,0,0" TextWrapping="Wrap" 
                  VerticalAlignment="Top" 
                  Height="26"  Width="295"
-                 VerticalContentAlignment="Center"/>
+                 VerticalContentAlignment="Center">
+            
+        </TextBox>
         <ComboBox x:Name="cbx_City"
                   ItemsSource="{Binding Cities}" 
                   SelectedItem="{Binding SelectedCity, Mode=TwoWay}" 
@@ -110,6 +118,7 @@
                     </Style.Triggers>
                 </Style>
             </ComboBox.Resources>
+            
         </ComboBox>
         <TextBox x:Name="tbx_Url" 
                  Text="{Binding Path=Url}"
@@ -119,7 +128,9 @@
                  Margin="34,218,0,0" TextWrapping="Wrap" 
                  VerticalAlignment="Top" 
                  Height="26"  Width="297" TextChanged="tbx_Url_TextChanged"
-                 VerticalContentAlignment="Center"/>
+                 VerticalContentAlignment="Center">
+            
+        </TextBox>
         <TextBox x:Name="tbx_PortalUrl"
                  Text="{Binding Path=PortalUrl}"
                  Style="{StaticResource tbxStandard}"
@@ -128,7 +139,9 @@
                  Margin="34,273,0,0" TextWrapping="Wrap" 
                  VerticalAlignment="Top" 
                  Height="26"  Width="296"
-                 VerticalContentAlignment="Center"/>
+                 VerticalContentAlignment="Center">
+            
+        </TextBox>
 
 
 

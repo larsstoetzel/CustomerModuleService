@@ -3,17 +3,23 @@ using CommunityToolkit.Mvvm.Input;
 using CustomerModules.Models.Entities;
 using CustomerModules.Providers;
 using CustomerModules.Services;
+using CustomerModules.Validators;
+using FluentValidation;
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
 namespace CustomerModules.ViewModels
 {
-    public class AddModuleViewModel : ObservableObject
+    public class AddModuleViewModel : ObservableObject, IDataErrorInfo
     {
         public ICommand AddModule { get; }
         public ICommand CloseAddModule { get; }
+        private readonly ModuleValidation _validator = new();
+
         public AddModuleViewModel(IModuleProvider moduleProvider, ICustomerService customerService)
         {
             AddModule = new RelayCommand<Window>(ExeAddModule);
@@ -55,6 +61,43 @@ namespace CustomerModules.ViewModels
         public void ExeCloseAdd(Window window)
         {
             window.Close();
+        }
+        public string Error
+        {
+            get
+            {
+                if (_validator != null)
+                {
+                    var results = _validator.Validate(this);
+                    if (results != null && results.Errors.Any())
+                    {
+                        var errors = string
+                            .Join(Environment.NewLine, results.Errors
+                            .Select(x => x.ErrorMessage).ToArray());
+                        return errors;
+                    }
+                }
+                return string.Empty;
+            }
+        }
+
+        private bool HasErrors()
+        {
+            var results = _validator.Validate(this);
+            return results.Errors.Any();
+        }
+        public string this[string columnName]
+        {
+            get
+            {
+                var firstOrDefault = _validator.Validate(this).Errors
+                    .FirstOrDefault(x => x.PropertyName == columnName);
+                if (firstOrDefault != null)
+                {
+                    return firstOrDefault.ErrorMessage;
+                }
+                return string.Empty;
+            }
         }
     }
 }

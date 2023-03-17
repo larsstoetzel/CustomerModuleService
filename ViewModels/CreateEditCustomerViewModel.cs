@@ -4,17 +4,20 @@ using CustomerModules.Commands;
 using CustomerModules.Models.Entities;
 using CustomerModules.Providers;
 using CustomerModules.Services;
+using CustomerModules.Validators;
 using CustomerModules.Views;
 using CustomerModules.Views.Dialogs;
 using CustomerModuleService.Providers;
+using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
 
 namespace CustomerModules.ViewModels
 {
 
-    public class CreateEditCustomerViewModel : ObservableObject
+    public class CreateEditCustomerViewModel : ObservableObject, IDataErrorInfo
     {
 
         public ICommand OpenAddModule { get; }
@@ -24,6 +27,8 @@ namespace CustomerModules.ViewModels
         private readonly ICustomerService customerService;
         private readonly ICustomerCommands _commands;
         private readonly IModuleProvider _moduleProvider;
+        private readonly CustomerValidation _validator = new();
+
         public CreateEditCustomerViewModel(ICustomerCommands commands, ICustomerService customerService,
             ICityProvider cityProvider, ICustomerProvider customerProvider,
             IModuleProvider moduleProvider)
@@ -98,9 +103,43 @@ namespace CustomerModules.ViewModels
             set { SetProperty(ref modules, value); }
         }
 
-        
+        public string Error
+        {
+            get
+            {
+                if (_validator != null)
+                {
+                    var results = _validator.Validate(this);
+                    if (results != null && results.Errors.Any())
+                    {
+                        var errors = string
+                            .Join(Environment.NewLine, results.Errors
+                            .Select(x => x.ErrorMessage).ToArray());
+                        return errors;
+                    }
+                }
+                return string.Empty;
+            }
+        }
 
-       
+        private bool HasErrors()
+        {
+            var results = _validator.Validate(this);
+            return results.Errors.Any();
+        }
+        public string this[string columnName]
+        {
+            get
+            {
+                var firstOrDefault = _validator.Validate(this).Errors
+                    .FirstOrDefault(x => x.PropertyName == columnName);
+                if (firstOrDefault != null)
+                {
+                    return firstOrDefault.ErrorMessage;
+                }
+                return string.Empty;
+            }
+        }
 
         public void LoadCustomer(int id)
         {
@@ -121,12 +160,17 @@ namespace CustomerModules.ViewModels
 
 
         public void ExeCreate()
-        {       
+        {
+            if (HasErrors())
+            {
+                return;
+            }
             _customerService
+
                 .AddEditCustomer(Name, CustomerId, SelectedCity.CityId, Url, PortalUrl, Modules.ToList());
             _commands.ExeCloseCreateEdit();
         }
-       
+
         private void ExeOpenAddModule()
         {
             var addModuleView = new AddModuleView();

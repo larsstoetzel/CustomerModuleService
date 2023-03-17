@@ -20,7 +20,8 @@
                 VerticalAlignment="Top" Width="370"/>
         <ComboBox x:Name="cbx_Module" 
                   ItemsSource="{Binding Modules}" 
-                  SelectedItem="{Binding Module, Mode=TwoWay}" 
+                  SelectedItem="{Binding Module, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
+                        ValidatesOnDataErrors=True}" 
                   DisplayMemberPath="Name"
                   IsEditable="False"
                   StaysOpenOnEdit="True"
@@ -39,6 +40,14 @@
                     </Style.Triggers>
                 </Style>
             </ComboBox.Resources>
+            <Validation.ErrorTemplate>
+                <ControlTemplate>
+                    <StackPanel Orientation="Vertical">
+                        <AdornedElementPlaceholder x:Name="textBox"/>
+                        <TextBlock Margin="0" Text="{Binding [0].ErrorContent}" Foreground="Red"/>
+                    </StackPanel>
+                </ControlTemplate>
+            </Validation.ErrorTemplate>
         </ComboBox>
         <DatePicker HorizontalAlignment="Center" 
                     VerticalAlignment="Top" 

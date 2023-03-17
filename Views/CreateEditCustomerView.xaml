@@ -12,14 +12,11 @@
         ResizeMode="NoResize"
         Height="374" Width="650">
     <Grid Margin="0,0,0,3">
-
         <Border BorderBrush="Black"
                 BorderThickness="1" 
                 HorizontalAlignment="Center" 
                 VerticalAlignment="Center"
                 Height="335" Width="630">
-
-
         </Border>
         <Label Content="Kunde" HorizontalAlignment="Left" Height="27" Margin="28,93,0,0" VerticalAlignment="Top" Width="49"/>
         <Label Content="Ortschaft" HorizontalAlignment="Left" Height="27" Margin="30,147,0,0" VerticalAlignment="Top" Width="68"/>
@@ -81,24 +78,40 @@
                     </GridViewColumn>
                 </GridView>
             </ListView.View>
-            
+            <Validation.ErrorTemplate>
+                <ControlTemplate>
+                    <StackPanel Orientation="Vertical">
+                        <AdornedElementPlaceholder x:Name="textBox"/>
+                        <TextBlock Margin="0" Text="{Binding [0].ErrorContent}" Foreground="Red"/>
+                    </StackPanel>
+                </ControlTemplate>
+            </Validation.ErrorTemplate>
         </ListView>
 
         <TextBox x:Name="tbx_Customer"
                  Style="{StaticResource tbxStandard}"
-                 Text="{Binding Name}"
+                 Text="{Binding Name, UpdateSourceTrigger=PropertyChanged,
+                        ValidatesOnDataErrors=True}"
                  FontSize="17"
                  HorizontalAlignment="Left"
                  Margin="34,115,0,0" TextWrapping="Wrap" 
                  VerticalAlignment="Top" 
                  Height="26"  Width="295"
                  VerticalContentAlignment="Center">
-            
+            <Validation.ErrorTemplate>
+                <ControlTemplate>
+                    <StackPanel Orientation="Vertical">
+                        <AdornedElementPlaceholder x:Name="textBox"/>
+                        <TextBlock Margin="0" Text="{Binding [0].ErrorContent}" Foreground="Red"/>
+                    </StackPanel>
+                </ControlTemplate>
+            </Validation.ErrorTemplate>
         </TextBox>
         <ComboBox x:Name="cbx_City"
                   ItemsSource="{Binding Cities}" 
                   SelectedItem="{Binding SelectedCity, Mode=TwoWay}" 
-                  Text="{Binding Path=City}"
+                  Text="{Binding Path=City, UpdateSourceTrigger=PropertyChanged,
+                         ValidatesOnDataErrors=True}"
                   DisplayMemberPath="Name"
                   IsEditable="False"
                   StaysOpenOnEdit="True"
@@ -118,10 +131,19 @@
                     </Style.Triggers>
                 </Style>
             </ComboBox.Resources>
-            
+            <Validation.ErrorTemplate>
+                <ControlTemplate>
+                    <StackPanel Orientation="Vertical">
+                        <AdornedElementPlaceholder x:Name="textBox"/>
+                        <TextBlock Margin="0" Text="{Binding [0].ErrorContent}" Foreground="Red"/>
+                    </StackPanel>
+                </ControlTemplate>
+            </Validation.ErrorTemplate>
         </ComboBox>
         <TextBox x:Name="tbx_Url" 
-                 Text="{Binding Path=Url}"
+                 Text="{Binding Path=Url,
+                        UpdateSourceTrigger=PropertyChanged,
+                        ValidatesOnDataErrors=True}"
                  Style="{StaticResource tbxStandard}"
                  FontSize="17"
                  HorizontalAlignment="Left"
@@ -129,10 +151,19 @@
                  VerticalAlignment="Top" 
                  Height="26"  Width="297" TextChanged="tbx_Url_TextChanged"
                  VerticalContentAlignment="Center">
-            
+            <Validation.ErrorTemplate>
+                <ControlTemplate>
+                    <StackPanel Orientation="Vertical">
+                        <AdornedElementPlaceholder x:Name="textBox"/>
+                        <TextBlock Margin="0" Text="{Binding [0].ErrorContent}" Foreground="Red"/>
+                    </StackPanel>
+                </ControlTemplate>
+            </Validation.ErrorTemplate>
         </TextBox>
         <TextBox x:Name="tbx_PortalUrl"
-                 Text="{Binding Path=PortalUrl}"
+                 Text="{Binding Path=PortalUrl, 
+                       UpdateSourceTrigger=PropertyChanged,
+                       ValidatesOnDataErrors=True}"
                  Style="{StaticResource tbxStandard}"
                  FontSize="17"
                  HorizontalAlignment="Left"
@@ -140,10 +171,14 @@
                  VerticalAlignment="Top" 
                  Height="26"  Width="296"
                  VerticalContentAlignment="Center">
-            
+            <Validation.ErrorTemplate>
+                <ControlTemplate>
+                    <StackPanel Orientation="Vertical">
+                        <AdornedElementPlaceholder x:Name="textBox"/>
+                        <TextBlock Margin="0" Text="{Binding [0].ErrorContent}" Foreground="Red"/>
+                    </StackPanel>
+                </ControlTemplate>
+            </Validation.ErrorTemplate>
         </TextBox>
-
-
-
     </Grid>
 </Window>

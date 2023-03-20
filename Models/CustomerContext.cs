@@ -15,7 +15,7 @@ namespace CustomerModules.Models
 
         public string DbPath { get; }
 
-        public CustomerContext()
+        public CustomerContext(DbContextOptions<CustomerContext> options)
         {
             var folder = Environment.CurrentDirectory;
             DbPath = System.IO.Path.Join(folder, "dbCustomerModule.db");

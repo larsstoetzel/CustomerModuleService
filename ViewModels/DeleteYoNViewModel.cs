@@ -2,7 +2,6 @@
 using CommunityToolkit.Mvvm.Input;
 using CustomerModules.Commands;
 using CustomerModules.Models.Entities;
-using CustomerModules.Providers;
 using CustomerModules.Services;
 using CustomerModuleService.Providers;
 using System.Linq;
@@ -49,8 +48,6 @@ namespace CustomerModules.ViewModels
             _service.DeleteCustomer(_customer);
             ExecuteCloseDeleteDialog();
             _commands.ExeCloseCreateEdit();
-           
-
         }
     }
 }

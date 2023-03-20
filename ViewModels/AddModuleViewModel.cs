@@ -52,10 +52,14 @@ namespace CustomerModules.ViewModels
 
         public void ExeAddModule(Window window)
         {
+            if (HasErrors())
             {
-                window.DialogResult = true;
-                window.Close();
+                return;
             }
+
+            window.DialogResult = true;
+           window.Close();
+            
         }
 
         public void ExeCloseAdd(Window window)

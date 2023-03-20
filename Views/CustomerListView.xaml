@@ -10,7 +10,6 @@
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         Title="CustomerListView" Height="900" Width="1500">
-
     <Grid KeyboardNavigation.TabNavigation="Cycle"
           HorizontalAlignment="Center" 
           Height="864" 
@@ -29,7 +28,6 @@
                 Margin="518,12,0,0" 
                 VerticalAlignment="Top"
                 Style="{StaticResource btnStandard}"/>
-
         <TextBox x:Name="tbx_SearchCustomer" 
                  HorizontalAlignment="Left"
                  Height="40" Width="450"
@@ -40,7 +38,6 @@
                  FontSize="17"
                  Style="{StaticResource tbxStandard}"
                  Text="{Binding SearchString}"/>
-
         <Button Content="Suche" 
                 FontSize="14"
                 Style="{StaticResource btnStandard}"
@@ -64,7 +61,6 @@
                   Margin="0,111,0,36" 
                   HorizontalAlignment="Center" Foreground="Black" Width="1423"
                   HorizontalContentAlignment="Left" SelectionChanged="lv_CustomerList_SelectionChanged">
-
             <ListView.View>
                 <GridView>
                     <GridView.ColumnHeaderContainerStyle>
@@ -90,11 +86,11 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock>
-                            <Hyperlink NavigateUri="{Binding PortalUrl}"
-                                       RequestNavigate="Hyperlink_RequestNavigate">
-                                <TextBlock Text="{Binding PortalUrl}" />
-                            </Hyperlink>
-                        </TextBlock>
+                                        <Hyperlink NavigateUri="{Binding PortalUrl}"
+                                                   RequestNavigate="Hyperlink_RequestNavigate">
+                                        <TextBlock Text="{Binding PortalUrl}" />
+                                        </Hyperlink>
+                                </TextBlock>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

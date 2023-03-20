@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CustomerModules.Commands;
+using CustomerModules.Models;
 using CustomerModules.Models.Entities;
 using CustomerModules.Providers;
 using CustomerModules.Services;
@@ -16,10 +17,8 @@ using System.Windows.Input;
 
 namespace CustomerModules.ViewModels
 {
-
     public class CreateEditCustomerViewModel : ObservableObject, IDataErrorInfo
     {
-
         public ICommand OpenAddModule { get; }
         public ICommand OpenDelete { get; }
         public ICommand CloseCreateEdit { get; }
@@ -27,12 +26,14 @@ namespace CustomerModules.ViewModels
         private readonly ICustomerService customerService;
         private readonly ICustomerCommands _commands;
         private readonly IModuleProvider _moduleProvider;
-        private readonly CustomerValidation _validator = new();
-
+        private readonly CustomerValidation _validator;
+        private readonly CustomerContext _context;
         public CreateEditCustomerViewModel(ICustomerCommands commands, ICustomerService customerService,
-            ICityProvider cityProvider, ICustomerProvider customerProvider,
-            IModuleProvider moduleProvider)
+        ICityProvider cityProvider, ICustomerProvider customerProvider,
+        IModuleProvider moduleProvider, CustomerContext context)
         {
+            _context = context;
+            _validator = new CustomerValidation(_context);
             OpenAddModule = new RelayCommand(ExeOpenAddModule);
             OpenDelete = new RelayCommand(ExeOpenDelete, CanExeDelete);
             SaveCommand = new RelayCommand(ExeCreate);
@@ -104,6 +105,7 @@ namespace CustomerModules.ViewModels
         }
 
         public string Error
+
         {
             get
             {
@@ -158,16 +160,13 @@ namespace CustomerModules.ViewModels
             return (CustomerId != null);
         }
 
-
         public void ExeCreate()
         {
             if (HasErrors())
             {
                 return;
             }
-            _customerService
-
-                .AddEditCustomer(Name, CustomerId, SelectedCity.CityId, Url, PortalUrl, Modules.ToList());
+            _customerService.AddEditCustomer(Name, CustomerId, SelectedCity.CityId, Url, PortalUrl, Modules.ToList());
             _commands.ExeCloseCreateEdit();
         }
 
@@ -192,9 +191,7 @@ namespace CustomerModules.ViewModels
             var deleteCustView = new DeleteYoNView(CustomerId);
 
             deleteCustView.ShowDialog();
-
         }
     }
-
 }
 

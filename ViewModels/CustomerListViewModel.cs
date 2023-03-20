@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CustomerModules.Models.Customers;
-using CustomerModules.Providers;
 using CustomerModules.Views;
 using CustomerModuleService.Providers;
 using System.Collections.ObjectModel;
@@ -56,7 +55,6 @@ namespace CustomerModules.ViewModels
             var data = _customerProvider.GetCustomerByNameOrAll(_searchString)
                 .Select(x => new CustomerItem(x.CustomerId, x.Name, x.City.Name, x.Url, x.PortalUrl));
             Customers = new ObservableCollection<CustomerItem>(data);
-
         }
 
         private void ExeOpenEdit()
@@ -69,7 +67,6 @@ namespace CustomerModules.ViewModels
 
             createEditView.ShowDialog();
             ExeSearch();
-
 
         }
         private void ExeOpenCreate()

@@ -17,16 +17,23 @@
                 BorderThickness="1" 
                 HorizontalAlignment="Center" 
                 Height="200" 
-                VerticalAlignment="Top" Width="370"/>
+                VerticalAlignment="Top" Width="370">
+            <TextBlock HorizontalAlignment="Left" 
+                       Height="14" Margin="120,76,0,0" 
+                       TextWrapping="Wrap" VerticalAlignment="Top" Width="119"><Run Language="de-ch" Text="Aktivierungsdatum"/></TextBlock>
+        </Border>
         <ComboBox x:Name="cbx_Module" 
                   ItemsSource="{Binding Modules}" 
-                  SelectedItem="{Binding Module, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged,
-                        ValidatesOnDataErrors=True}" 
+                  SelectedItem="{Binding Module,
+                                Mode=TwoWay, 
+                                UpdateSourceTrigger=PropertyChanged,
+                                ValidatesOnDataErrors=True}" 
                   DisplayMemberPath="Name"
-                  IsEditable="False"
+                  SelectedIndex="5"
+                  IsEditable="True"
                   StaysOpenOnEdit="True"
                   HorizontalAlignment="Center" 
-                  Margin="0,33,0,0" 
+                  Margin="0,24,0,0" 
                   VerticalAlignment="Top" Width="128" 
                   Height="35" FontSize="18"
                   VerticalContentAlignment="Center">
@@ -53,10 +60,20 @@
                     VerticalAlignment="Top" 
                     Width="128"
                     Height="35"
-                    FontSize="16" Margin="0,88,0,0"
+                    FontSize="16" Margin="0,92,0,0"
                     VerticalContentAlignment="Center"
-                    SelectedDate="{Binding ActivationDate, StringFormat='dd.mm.yyyy'}"
-                    >
+                    SelectedDate="{Binding ActivationDate, 
+                                  StringFormat='dd.mm.yyyy', 
+                                  UpdateSourceTrigger=PropertyChanged,
+                                  ValidatesOnDataErrors=True}">
+            <Validation.ErrorTemplate>
+                <ControlTemplate>
+                    <StackPanel Orientation="Vertical">
+                        <AdornedElementPlaceholder x:Name="textBox"/>
+                        <TextBlock Margin="0" Text="{Binding [0].ErrorContent}" Foreground="Red"/>
+                    </StackPanel>
+                </ControlTemplate>
+            </Validation.ErrorTemplate>
             <DatePicker.Resources>
                 <Style TargetType="DatePickerTextBox">
                     <Style.Triggers>
@@ -74,8 +91,7 @@
                     FontSize="15" 
                     Style="{StaticResource btnStandard}"
                     Command="{Binding AddModule}"
-                    CommandParameter="{Binding ElementName=ModuleWindow}"
-/>
+                    CommandParameter="{Binding ElementName=ModuleWindow}"/>
             <Button x:Name="btn_Cancel"
                     IsCancel="True"
                     Command="{Binding CloseAddModule}"
@@ -83,5 +99,9 @@
                     Content="Abbrechen" 
                     Style="{StaticResource btnStandard}"/>
         </StackPanel>
+        <TextBlock HorizontalAlignment="Left" 
+                   Height="18" Margin="132,8,0,0" 
+                   TextWrapping="Wrap" VerticalAlignment="Top" 
+                   Width="37"><Run Language="de-ch" Text="Modul"/></TextBlock>
     </Grid>
 </Window>

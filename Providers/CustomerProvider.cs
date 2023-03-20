@@ -14,7 +14,7 @@ namespace CustomerModules.Providers
         {
             _context = context;
         }
-       public Customer GetCustomerById(int id)
+        public Customer GetCustomerById(int id)
         {
             return _context.Customers
                 .AsNoTracking()
@@ -42,7 +42,6 @@ namespace CustomerModules.Providers
                 .OrderBy(cu => cu.Name)
                 .ToList();
             }
-
         }
     }
 }

@@ -11,7 +11,6 @@
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
     <Grid HorizontalAlignment="Center" Height="134" VerticalAlignment="Center" Width="300">
-
         <Border BorderBrush="Black" BorderThickness="1" Margin="10,10,10,10"/>
         <Button x:Name="btn_no"
                 Command="{Binding CloseDeleteViewCommand}"
@@ -23,12 +22,10 @@
                 Style="{StaticResource ResourceKey=btnStandard}" 
                 Content="Ja" Margin="180,79,20,20"/>
         <TextBlock HorizontalAlignment="Center"  TextAlignment="Center" TextWrapping="Wrap" 
-                   Margin="0,28,0,67" Width="260"
-                   >
+                   Margin="0,28,0,67" Width="260">
             <Run Text="{Binding Path=Customer.Name}"/>
             <LineBreak/>
             <Run Text="wirklich löschen?"/>
         </TextBlock>
-
     </Grid>
 </Window>

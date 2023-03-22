@@ -1,8 +1,6 @@
 ﻿using CustomerModules.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Reflection.Emit;
 
 namespace CustomerModules.Models
 {
@@ -20,6 +18,9 @@ namespace CustomerModules.Models
             var folder = Environment.CurrentDirectory;
             DbPath = System.IO.Path.Join(folder, "dbCustomerModule.db");
         }
+        //public CustomerContext(DbContextOptions<CustomerContext> options) : base(options)
+        //{
+        //}
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         => options.UseSqlite($"Data Source={DbPath}");
 
